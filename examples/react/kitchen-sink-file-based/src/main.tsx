@@ -128,9 +128,26 @@ function App() {
           auth,
         }}
       />
+      {/* This does not work: */}
+      <Test />
     </>
   )
 }
+
+function Test() {
+  React.useEffect(() => {
+    const url = new URL(window.location.href);
+    const code = url.searchParams.get("code");
+    if (code !== null) {
+      url.searchParams.delete("code");
+      window.history.replaceState({}, "", url.toString());
+      console.log("erased (from sibling)", code);
+    }
+  });
+  return null;
+}
+
+
 
 const rootElement = document.getElementById('app')!
 if (!rootElement.innerHTML) {

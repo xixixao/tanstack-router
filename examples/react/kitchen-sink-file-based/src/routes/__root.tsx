@@ -21,8 +21,11 @@ export const Route = createRootRouteWithContext<{
 })
 
 function RootComponent() {
+
   return (
     <>
+      {/* This works: */}
+      {/* <Test /> */}
       <div className={`min-h-screen flex flex-col`}>
         <div className={`flex items-center border-b gap-2`}>
           <h1 className={`text-3xl p-2`}>Kitchen Sink</h1>
@@ -76,4 +79,18 @@ function RootComponent() {
       <TanStackRouterDevtools position="bottom-right" />
     </>
   )
+}
+
+
+function Test() {
+  React.useEffect(() => {
+    const url = new URL(window.location.href);
+    const code = url.searchParams.get("code");
+    if (code !== null) {
+      url.searchParams.delete("code");
+      window.history.replaceState({}, "", url.toString());
+      console.log("erased (from child)", code);
+    }
+  });
+  return null;
 }
